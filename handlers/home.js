@@ -63,41 +63,36 @@ module.exports = (req, res) => {
       let form = new formidable.IncomingForm();
       //console.log(form);
       form.parse(req, (err, fields, files) => {
-        if (err) { // "if" this is true, then run this code...
-          console.log(err)
-          
-          // res.write(404);
-          // res.end();
-          //return;
+      console.log(files.upload.name);
+        if (err) throw err; // {"if" this is true, then run this code...
+        
           let oldPath = files.upload.path;
-          let newPath = path.normalize(path.join(globalPath, "/content/images" + files.upload.name));
-
+          let newPath = path.normalize(path.join(__dirname, "../content/images/" + files.upload.name));
+        
           fs.rename(oldPath, newPath, (err)=> {
+            console.log("the old path:", oldPath);
+            console.log('the new path:', newPath);
               if (err) throw err;
               console.log('files was uploaded successfully')
           });
-        }
-        fs.readFile('.data//cats.json', 'utf8', (err, data) =>{
+        
+        fs.readFile('./data/cats.json', 'utf8', (err, data) =>{
             let allCats = JSON.parse(data);
-            allCats.push({id:CacheStorage.length =1, ...fields, image: files.upload.name});
-            let json = json.stringify(allCats);
-            fs.writeFile('/data/cats.json', json, () => {
-                res.writeHead(202, { location: "/" });
+            let newId = oldPath.match(/[\A-Za-z0-9]+$/g)[0];
+            
+            allCats.push({ id:newId, ...fields, image: files.upload.name});
+            //allCats.push({ id:catsArray.length -1, ...fields, image: files.upload.name});
+            /// 3e81ffaf2445b2aa863b7f18a260b1ea
+            
+            let json = JSON.stringify(allCats);
+            fs.writeFile('./data/cats.json', json, () => {
+                res.writeHead(302, { location: "/" });
                 res.end();
             });
         });
         console.log("the fields are ", fields);
         console.log("the file(s) are ", files)
       });
-    // index.on('data', (data) => {
-    //   res.write(data);
-    // });
-    // index.on('end', () => {
-    //   res.end();
-    // })
-    // index.on('error', (err) => {
-    //   console.log(err);
-    // })
   } else if (pathname === '/cats/add-breed' && req.method === 'POST') {
     let formData = "";
     req.on('data', (data) => {
