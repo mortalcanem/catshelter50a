@@ -1,0 +1,27 @@
+{
+  "name": "cat-shelter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "formidable": "^1.2.2",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7",
+    "querystring": "^0.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mortalcanem/catshelter50a.gigit cht"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mortalcanem/catshelter50a/issues"
+  },
+  "homepage": "https://github.com/mortalcanem/catshelter50a#readme",
+  "description": ""
+}
